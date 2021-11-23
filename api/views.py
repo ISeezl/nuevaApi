@@ -18,24 +18,24 @@ class UsuarioView(View):
         if(idUsuario>0):
             users=  list(Usuario.objects.filter(idUsuario=idUsuario).values())
             if len(users) > 0:
-                datos = {'message': "Success",'Users': users}
-            else:
-                datos = {'message': "Usuario no encontrados"}
+                datos = {'Users': users}
+
             
             return JsonResponse(datos)
-
+        
         else:
             users = list(Usuario.objects.values())
             if len(users) > 0:
-                datos = {'message': "Success",'Users': users}
-            else:
-                datos = {'message': "Usuarios no encontrados"} 
+                datos = {'Users': users}
+             
             
             return JsonResponse(datos)
+    
+    
 
     def post(self,request):
         jsonData= json.loads(request.body)
-        Usuario.objects.create(email=jsonData['email'],password=jsonData['password'])
+        Usuario.objects.create(nombreUsuario = jsonData['nombreUsuario'],email=jsonData['email'],password=jsonData['password'])
         datos = {'message': "Usuario Agregado"}
         return JsonResponse(datos)
 
